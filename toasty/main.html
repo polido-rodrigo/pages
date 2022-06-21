@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toasty</title>
+    <style>
+        *{
+            padding:0;
+            margin: 0;
+        }
+        body{
+            margin: 5px auto;
+            background-color: #484848;
+            width: 98vw;
+        }
+        
+        main{
+            overflow:hidden;
+            position: relative;
+            justify-content: right;
+        }
+        .botao{
+            padding: 50px;
+
+            display: block;
+            text-align: center;
+        }
+        .botao button{
+            padding: 20px 0;
+        }
+        .toasty{
+            text-align: right;
+            height: 300px;
+        }
+        .toasty img{
+            height: 100%;
+            object-fit: contain;
+            transform: translateX(300px);
+            transition: 1s;
+        }
+
+        button{
+            border-radius: 15px;
+            height: 100px;
+            width: 162px;
+            background-color: #6a386b;
+            color: azure;
+            
+            box-shadow: 4px 1px 2px rgba(0, 0, 0, 0.133);
+            font-size: 1.5em;
+        }
+        
+        button:hover{
+            cursor: pointer;
+            border: 3px solid black;
+            background-color: #664467;
+            font-size: 2em;
+        }
+
+        @keyframes esquerda {
+            0%{
+                
+            }
+            50%{
+                transform: translateX(-150px);
+            }
+            100%{
+                transform: translateX(150px);
+            }
+            
+        }
+
+    </style>
+</head>
+<body>
+    <script>
+        //Funcao que pode pausar o programa por um tempo
+        function Sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function Move(){
+        }
+        
+        //cria uma constante com o audio toasty
+        const audio = new Audio("audio/toasty.mp3");
+        
+        async function clicar(){
+
+            //desativa o botao
+            var bot = window.document.querySelector('button')
+            bot.disabled = typeof on !== 'boolean' ? !bot.disabled : on;
+            
+            audio.play();
+            bot.style.setProperty('color', '#252525')
+
+            var tos = window.document.querySelector('.toasty')
+            await Sleep(50);
+            
+            var desloc = -300;
+            var px_frame = desloc/60*-1;
+            let i = 0
+
+            for(i ;i >= desloc;i-=px_frame){
+                tos.style.setProperty('transform','translateX('+i+'px)')
+                await Sleep(1);
+            }
+            await Sleep(1500);
+
+            for(i ; i <= 0; i += px_frame){
+                tos.style.setProperty('transform','translateX('+i+'px)')
+                await Sleep(1);
+            }
+            var bot = window.document.querySelector('button')
+            bot.style.setProperty('color', 'white')
+
+            bot.disabled = typeof on !== 'boolean' ? !bot.disabled : off;
+        }
+
+    </script>
+    <main>
+        <div  class="botao">
+            <button onclick="clicar()">Toasty!</button>
+        </div>
+        <div class="toasty">
+            <img class="imagem" src="img/Sem título.png" alt="toasty">
+        </div>
+    </main>
+    
+</body>
+</html>
